@@ -152,6 +152,6 @@ sudo firewall-cmd --reload
 
 
 ### **✅ Installation Complete!**  
-You can now access Discovery and start using it. Let me know if you need any further assistance! 🚀
+
 ---
 
