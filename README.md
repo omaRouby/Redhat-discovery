@@ -152,6 +152,45 @@ sudo firewall-cmd --reload
 
 
 ### **✅ Installation Complete!**  
+It looks like the images were loaded, but they are missing **repository names and tags** (`<none>`). This usually happens if the images were not saved correctly with their names and tags or if the metadata was lost.  
 
+### **Fix: Re-tag the Image Properly**  
+Since the image ID is `23fa808dfed6`, manually tag it with the correct name and version:  
+
+```bash
+podman tag 23fa808dfed6 registry.redhat.io/discovery/discovery-ui-rhel9:1.12
+podman tag 23fa808dfed6 registry.redhat.io/discovery/discovery-server-rhel9:1.12
+podman tag 23fa808dfed6 registry.redhat.io/rhel9/postgresql-15:latest
+podman tag 23fa808dfed6 registry.redhat.io/rhel9/redis-6:latest
+```
+  
+After tagging, verify the images:  
+```bash
+podman images
+```
+You should now see the correct repository names.  
+
+### **Next Steps**  
+1. Try starting the containers manually:  
+   ```bash
+   podman run -d --name redis registry.redhat.io/rhel9/redis-6:latest
+   podman run -d --name postgres registry.redhat.io/rhel9/postgresql-15:latest
+   podman run -d --name discovery-ui registry.redhat.io/discovery/discovery-ui-rhel9:1.12
+   podman run -d --name discovery-server registry.redhat.io/discovery/discovery-server-rhel9:1.12
+   ```
+2. Check running containers:  
+   ```bash
+   podman ps
+   ```
+3. Restart Discovery service:  
+   ```bash
+   systemctl --user restart discovery-app
+   ```
+4. Check service logs if it still fails:  
+   ```bash
+   journalctl --user -xeu discovery-app
+   ```
+
+Let me know if you run into issues!
 ---
 
